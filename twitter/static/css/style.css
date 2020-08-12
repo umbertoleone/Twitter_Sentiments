@@ -53,6 +53,9 @@ body {
   color: white;
 }
 
+.row2 {
+  text-align: center;
+}
 /* Adding styles to the aside and filter form */
 .logo-form {
   margin-top: 50px;
@@ -91,6 +94,7 @@ select {
 .margin-top-50 {
   margin-top: 50px;
 }
+
 
 /* The styles for the parallax */
 .hero {
