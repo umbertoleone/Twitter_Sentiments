@@ -1,20 +1,21 @@
+
 import os
 import numpy as np
 import flask
 import pickle
 from flask import Flask, render_template, request
-from nbtfidf import tweet_predict
-import nbtfidf
+from nbbowfinal import tweet_predict
+import nbbowfinal
 
 #creating instance of the class
 app=Flask(__name__)
 
 #run the model while starting flask
-nbtfidf.model_start()
+nbbowfinal.model_start()
 
 
 def ValuePredictor(tweet):
-    result = nbtfidf.tweet_predict(tweet)
+    result = nbbowfinal.tweet_predict(tweet)
     return result
 
 #to tell flask what url shoud trigger the function index()
@@ -30,7 +31,9 @@ def about():
 @app.route('/result.html',methods = ['POST'])
 def result():
     if request.method == 'POST':
+        print(request.form)
         to_predict_list = request.form.to_dict()
+        print (to_predict_list)
         result = ValuePredictor(to_predict_list)
         return render_template("result.html", prediction=result)
 
