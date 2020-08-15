@@ -11,7 +11,8 @@ import nbbowfinal
 app=Flask(__name__)
 
 #run the model while starting flask
-nbbowfinal.model_start()
+# comment the below line after the first run
+# nbbowfinal.model_start()
 
 
 def ValuePredictor(tweet):

@@ -4,7 +4,7 @@ import pandas as pd
 #to clean the tweets
 import re
 import nltk
-#comment out these two after the first run
+#comment out the below two downloads after the first run
 # nltk.download('stopwords')
 # nltk.download('punkt')
 from nltk.corpus import stopwords
@@ -24,14 +24,7 @@ from sklearn.metrics import f1_score, confusion_matrix, classification_report
 import joblib # for saving our model
 import pickle # for saving our model
 
-def model_start():
-
-    #Read data files
-    traindf = pd.read_csv('data/train.csv')
-    # print (traindf)
-    #drop duplicates
-    traindf.drop_duplicates(inplace=True)
-    #clean traindf tweets
+def cleaning(traindf):
     corpus = []
     for i in range (0, len(traindf)):
         tweet = traindf['tweet'][i]
@@ -46,8 +39,18 @@ def model_start():
         tweet = [ps.stem(word) for word in tweet if not word in set(all_stopwords)]
         tweet = ' '.join(tweet)
         corpus.append(tweet)
-        
-    #assign corpus to each df and rename columns
+    return corpus
+
+def model_start():
+    #Read data files
+    traindf = pd.read_csv('data/train.csv')
+    # print (traindf)
+    #drop duplicates
+    traindf.drop_duplicates(inplace=True)
+
+    #clean traindf tweets
+    corpus = cleaning(traindf)
+    #assign corpus to df and rename column
     traindf['cleaned'] = np.array(corpus)
     train = traindf.drop(columns=['id', 'tweet'])
     
@@ -63,9 +66,10 @@ def model_start():
     train_upsampled = pd.concat([train_minority_upsampled, train_majority])
     #Extract Features
     bow_cv = CountVectorizer(max_features=1000).fit(train_upsampled['cleaned'])
+    #save vectorizer
     vectorizer = 'vectorizer.pkl'
     joblib.dump(bow_cv, vectorizer)
-
+    #transform to dense array
     counter = joblib.load(vectorizer)
     X = counter.transform(train_upsampled['cleaned']).toarray()
     y = train_upsampled['label']
@@ -86,24 +90,28 @@ def model_start():
     model = 'classifier.pkl'
     joblib.dump(nbbow, open(model, 'wb'))
 
-    return
-
-#model_start()
+# model_start()
 
 def tweet_predict(input1):
     #load model
     classifier = joblib.load(open('classifier.pkl', "rb"))
     vectorizermodel = joblib.load(open('vectorizer.pkl', "rb"))
-
+    #meake a datframe of the input
+    traindf = pd.DataFrame(columns=['tweet'])
+    traindf = traindf.append({"tweet": input1['example-form']}, ignore_index=True)
     print(input1)
-
-    input_string = np.array(list(input1.values()))
-    print(input_string)
-    vectorized_input = vectorizermodel.transform(input_string).toarray()
+    #clean the tweet
+    corpus = cleaning(traindf)
+    print(corpus)
+    traindf['cleaned'] = np.array(corpus)
+    traindf = traindf.drop(columns=['tweet'])
+    print(traindf)
+    #vectorized the cleaned tweet
+    vectorized_input = vectorizermodel.transform(traindf['cleaned']).toarray()
     print(vectorized_input)
 
+    #classify the tweet
     result = classifier.predict(vectorized_input)
-
     print(result)
 
     return result[0]
