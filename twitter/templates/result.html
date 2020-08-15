@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/superhero/bootstrap.min.css">
   <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
   <link rel="stylesheet" href="../static/css/style.css"/>
+  <link rel=“icon” href=“data:,“>
 
 </head>
 
@@ -43,12 +44,13 @@
         <form action = "result.html" method = "POST">
           <div class="form-group">
             <label for="example-form">
-              <p style="font-size:15px"> Is your Tweet positive or negative?</p> </label>
+              <p style="font-size:15px"> Is your tweet hate speech? </p> </label>
             <input class="form-control" id="example-form-input" name="example-form" type="text" placeholder="Type Tweet">
           </div>
           <button id="submit" type="submit" class="btn btn-default">Submit</button>
+        
+          <p style="text-align:center; font-size:20px"> 0 = No, your tweet is good to go :) , 1 = Yes! Please consider changing your tweet </p>
           
-          <p style="text-align:center; font-size:25px"> 0=positive 1= negative</p>
         </form>
       </div>
       </div>
