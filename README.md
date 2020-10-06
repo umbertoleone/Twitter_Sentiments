@@ -1,5 +1,5 @@
 # Twitter Sentiments
-Machine learning project in the Natural Language Processing (NPL) field that trains a Naive Bayes model to classify hate speech in a tweet. We developed a flask application for this project.
+Machine learning project in the Natural Language Processing (NPL) field that trains a Naive Bayes model to classify hate speech on a tweet. We developed a flask application for this project, which classifies a tweet as 0 = No, your tweet is good to go :) , or 1 = Yes! Please consider changing your tweet. 
 
 ### Dataset
 
