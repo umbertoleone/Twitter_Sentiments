@@ -31,10 +31,11 @@ We created models with Naive Bayes (nb), Random Forest (rf), and support vector 
 
 ## Results
 
-We used F-1 scores for choosing our model performance. Scores of the models by feauture selection and by classifier are detailed in Table 1 below.
+We used F-1 scores for choosing our model performance. Scores of the models by vectorizer and by classifier are detailed in Table 1 below. All models before resampling scored around the 50% mark, which indicated there was no advantage of using the model since chances of obtaining a classification of hate or non-hate was the same. After re-sampling (up-sampling minority class for nb and rf, and penalizing for svm) scores showed improvement for the nv and rf models, and a decrease in performance for the svm model. Lower performance with SVM model was unexpected since its a popular classifier for sentiment analysis.
+Although scores of BOW rf model was the highest, we decided to use the nb model for our app. This is because of the large file size produced by the rf model, which made it dificult to share and upload into our repository.
 
 Table 1
- |Vectorizer|Classifier| F-1 Score Before Re-sampling| After Re-sampling|            
+ |Vectorizer|Classifier| F-1 Score Before Re-sampling| F-1 Score After Re-sampling|            
  |:---:|:---:|:---:|:---:|
  |BOW |Naive Bayes| 0.21|0.87|
  |Tf-Idf |Naive Bayes| 0.22|0.87|
