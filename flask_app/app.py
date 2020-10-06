@@ -4,19 +4,19 @@ import numpy as np
 import flask
 import pickle
 from flask import Flask, render_template, request
-from nbbowfinal import tweet_predict
-import nbbowfinal
+from model import tweet_predict
+import model
 
 #creating instance of the class
 app=Flask(__name__)
 
 #run the model while starting flask
 # comment the below line after the first run
-# nbbowfinal.model_start()
+# model.model_start()
 
 
 def ValuePredictor(tweet):
-    result = nbbowfinal.tweet_predict(tweet)
+    result = model.tweet_predict(tweet)
     return result
 
 #to tell flask what url shoud trigger the function index()
